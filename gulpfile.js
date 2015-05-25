@@ -57,15 +57,28 @@ elixir(function(mix) {
         'public/assets/pickadate/picker.time.js'
     );
 
-    // Combine scripts
+    // Copy the Clean Blog Less files
+    mix.copy(
+        'vendor/bower_components/clean-blog/less',
+        'resources/assets/less/clean-blog'
+    );
+
+    // Combine admin scripts
     mix.scripts([
         'js/jquery.js',
         'js/bootstrap.js',
         'js/dataTables.js',
         'js/dataTables.bootstrap.js'
-
     ], 'public/assets/js/admin.js', 'resources/assets');
+
+    // Combine blog scripts
+    mix.scripts([
+        'js/jquery.js',
+        'js/bootstrap.js',
+        'js/blog.js'
+    ], 'public/assets/js/blog.js', 'resources/assets');
 
     // Compile Less
     mix.less('admin.less', 'public/assets/css');
+    mix.less('blog.less', 'public/assets/css');
 });
