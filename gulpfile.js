@@ -1,5 +1,7 @@
 var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
-    mix.phpUnit();
+    mix
+        .less('admin.less', 'public/assets/css')
+        .phpUnit();
 });
