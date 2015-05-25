@@ -14,6 +14,8 @@
     "bootstrap": "~3.3.4",
     "fontawesome": "~4.3.0",
     "datatables": "~1.10.7",
-    "datatables-plugins": "~1.10.7"
+    "datatables-plugins": "~1.10.7",
+    "selectize": "~0.12.1",
+    "pickadate": "~3.5.6"
   }
 }

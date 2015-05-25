@@ -36,6 +36,27 @@ elixir(function(mix) {
         'resources/assets/js/dataTables.bootstrap.js'
     );
 
+    // Copy selectize and pickadate
+    mix.copy(
+        'vendor/bower_components/selectize/dist/css',
+        'public/assets/selectize/css'
+    ).copy(
+        'vendor/bower_components/selectize/dist/js/standalone/selectize.min.js',
+        'public/assets/selectize/selectize.min.js'
+    ).copy(
+        'vendor/bower_components/pickadate/lib/compressed/themes',
+        'public/assets/pickadate/themes'
+    ).copy(
+        'vendor/bower_components/pickadate/lib/compressed/picker.js',
+        'public/assets/pickadate/picker.js'
+    ).copy(
+        'vendor/bower_components/pickadate/lib/compressed/picker.date.js',
+        'public/assets/pickadate/picker.date.js'
+    ).copy(
+        'vendor/bower_components/pickadate/lib/compressed/picker.time.js',
+        'public/assets/pickadate/picker.time.js'
+    );
+
     // Combine scripts
     mix.scripts([
         'js/jquery.js',
