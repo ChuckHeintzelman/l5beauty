@@ -1,8 +1,8 @@
 <?php
 
-Route::get('/', function () {
+get('/', function () {
     return redirect('/blog');
 });
 
-Route::get('blog', 'BlogController@index');
-Route::get('blog/{slug}', 'BlogController@showPost');
+get('blog', 'BlogController@index');
+get('blog/{slug}', 'BlogController@showPost');
