@@ -5,9 +5,10 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePostsTable extends Migration
 {
-
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -23,6 +24,8 @@ class CreatePostsTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

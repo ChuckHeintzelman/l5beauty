@@ -1,50 +1,65 @@
+var gulp = require('gulp');
+var rename = require('gulp-rename');
 var elixir = require('laravel-elixir');
 
-elixir(function(mix) {
-    var dtPluginsDir = 'vendor/bower_components/datatables-plugins/';
+/**
+ * Copy any needed files.
+ *
+ * Do a 'gulp copyfiles' after bower updates
+ */
+gulp.task("copyfiles", function() {
 
-    // Copy jquery, bootstrap, and font awesome
-    mix.copy(
-        'vendor/bower_components/jquery/dist/jquery.js',
-        'resources/assets/js/jquery.js'
-    ).copy(
-        'vendor/bower_components/bootstrap/less',
-        'resources/assets/less/bootstrap'
-    ).copy(
-        'vendor/bower_components/bootstrap/dist/js/bootstrap.js',
-        'resources/assets/js/bootstrap.js'
-    ).copy(
-        'vendor/bower_components/bootstrap/dist/fonts',
-        'public/assets/fonts'
-    ).copy(
-        'vendor/bower_components/fontawesome/less',
-        'resources/assets/less/fontawesome'
-    ).copy(
-        'vendor/bower_components/fontawesome/fonts',
-        'public/assets/fonts'
-    );
+    // Copy jQuery, Bootstrap, and FontAwesome
+    gulp.src("vendor/bower_dl/jquery/dist/jquery.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+
+    gulp.src("vendor/bower_dl/bootstrap/less/**")
+        .pipe(gulp.dest("resources/assets/less/bootstrap"));
+
+    gulp.src("vendor/bower_dl/bootstrap/dist/js/bootstrap.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+
+    gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
+        .pipe(gulp.dest("public/assets/fonts"));
+
+    gulp.src("vendor/bower_dl/fontawesome/less/**")
+        .pipe(gulp.dest("resources/assets/less/fontawesome"));
+
+    gulp.src("vendor/bower_dl/fontawesome/fonts/**")
+        .pipe(gulp.dest("public/assets/fonts"));
 
     // Copy datatables
-    mix.copy(
-        'vendor/bower_components/datatables/media/js/jquery.dataTables.js',
-        'resources/assets/js/dataTables.js'
-    ).copy(
-        dtPluginsDir + 'integration/bootstrap/3/dataTables.bootstrap.css',
-        'resources/assets/less/dataTables.less'
-    ).copy(
-        dtPluginsDir + 'integration/bootstrap/3/dataTables.bootstrap.js',
-        'resources/assets/js/dataTables.bootstrap.js'
-    );
+    var dtDir = 'vendor/bower_dl/datatables-plugins/integration/';
+
+    gulp.src("vendor/bower_dl/datatables/media/js/jquery.dataTables.js")
+        .pipe(gulp.dest('resources/assets/js/'));
+
+    gulp.src(dtDir + 'bootstrap/3/dataTables.bootstrap.css')
+        .pipe(rename('dataTables.bootstrap.less'))
+        .pipe(gulp.dest('resources/assets/less/others/'));
+
+    gulp.src(dtDir + 'bootstrap/3/dataTables.bootstrap.js')
+        .pipe(gulp.dest('resources/assets/js/'));
+
+
+});
+
+/**
+ * Default gulp is to run this elixir stuff
+ */
+elixir(function(mix) {
 
     // Combine scripts
     mix.scripts([
-        'js/jquery.js',
-        'js/bootstrap.js',
-        'js/dataTables.js',
-        'js/dataTables.bootstrap.js'
-
-    ], 'public/assets/js/admin.js', 'resources/assets');
+            'js/jquery.js',
+            'js/bootstrap.js',
+            'js/jquery.dataTables.js',
+            'js/dataTables.bootstrap.js'
+        ],
+        'public/assets/js/admin.js',
+        'resources/assets'
+    );
 
     // Compile Less
-    mix.less('admin.less', 'public/assets/css');
+    mix.less('admin.less', 'public/assets/css/admin.css');
 });
