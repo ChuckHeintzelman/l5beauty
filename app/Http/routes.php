@@ -1,30 +1,30 @@
 <?php
 
 // Blog pages
-Route::get('/', function () {
+get('/', function () {
     return redirect('/blog');
 });
-Route::get('blog', 'BlogController@index');
-Route::get('blog/{slug}', 'BlogController@showPost');
+get('blog', 'BlogController@index');
+get('blog/{slug}', 'BlogController@showPost');
 
 // Admin area
-Route::get('admin', function () {
+get('admin', function () {
     return redirect('/admin/post');
 });
-Route::group([
+$router->group([
     'namespace' => 'Admin',
     'middleware' => 'auth',
 ], function () {
-    Route::resource('admin/post', 'PostController');
-    Route::resource('admin/tag', 'TagController', ['except' => 'show']);
-    Route::get('admin/upload', 'UploadController@index');
-    Route::post('admin/upload/file', 'UploadController@uploadFile');
-    Route::delete('admin/upload/file', 'UploadController@deleteFile');
-    Route::post('admin/upload/folder', 'UploadController@createFolder');
-    Route::delete('admin/upload/folder', 'UploadController@deleteFolder');
+    resource('admin/post', 'PostController');
+    resource('admin/tag', 'TagController', ['except' => 'show']);
+    get('admin/upload', 'UploadController@index');
+    post('admin/upload/file', 'UploadController@uploadFile');
+    delete('admin/upload/file', 'UploadController@deleteFile');
+    post('admin/upload/folder', 'UploadController@createFolder');
+    delete('admin/upload/folder', 'UploadController@deleteFolder');
 });
 
 // Logging in and out
-Route::get('/auth/login', 'Auth\AuthController@getLogin');
-Route::post('/auth/login', 'Auth\AuthController@postLogin');
-Route::get('/auth/logout', 'Auth\AuthController@getLogout');
+get('/auth/login', 'Auth\AuthController@getLogin');
+post('/auth/login', 'Auth\AuthController@postLogin');
+get('/auth/logout', 'Auth\AuthController@getLogout');

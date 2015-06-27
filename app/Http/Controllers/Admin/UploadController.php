@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\UploadNewFolderRequest;
-use App\Http\Controllers\Controller;
 use App\Services\UploadsManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;

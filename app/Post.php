@@ -1,8 +1,8 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -13,7 +13,7 @@ class Post extends Model
         $this->attributes['title'] = $value;
 
         if (! $this->exists) {
-            $this->attributes['slug'] = Str::slug($value);
+            $this->attributes['slug'] = str_slug($value);
         }
     }
 }
