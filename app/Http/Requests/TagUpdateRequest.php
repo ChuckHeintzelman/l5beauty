@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
 class TagUpdateRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *

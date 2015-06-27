@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 class TagCreateRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
