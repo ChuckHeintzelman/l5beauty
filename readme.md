@@ -1,9 +1,7 @@
-## Laravel 5 Beauty
+# Laravel 5.1 Beauty
 
-A simple, clean and beautiful blogging application written in Laravel 5.
+A simple, clean and beautiful blogging application written in Laravel 5.1.
 
-This repository contains the source code to accompany the book
-[Laravel 5 Beauty](http://laravelcoding.com/blog?tag=L5+Beauty).
+This repository contains the source code to accompany the book Laravel 5.1 Beauty.
 
-This is the **Chapter 12 - Posts Administration** branch.
-
+This is the **Chapter 12** branch.

@@ -1,6 +1,8 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Commands\PostFormFields;
+namespace App\Http\Controllers\Admin;
+
+use App\Jobs\PostFormFields;
 use App\Http\Requests;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
@@ -9,7 +11,6 @@ use App\Post;
 
 class PostController extends Controller
 {
-
     /**
      * Display a listing of the posts.
      */

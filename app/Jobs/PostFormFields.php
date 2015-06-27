@@ -1,12 +1,13 @@
 <?php
-namespace App\Commands;
+
+namespace App\Jobs;
 
 use App\Post;
 use App\Tag;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 
-class PostFormFields extends Command implements SelfHandling
+class PostFormFields extends Job implements SelfHandling
 {
     /**
      * The id (if any) of the Post row
@@ -66,7 +67,7 @@ class PostFormFields extends Command implements SelfHandling
 
         return array_merge(
             $fields,
-            ['allTags' => Tag::lists('tag')]
+            ['allTags' => Tag::lists('tag')->all()]
         );
     }
 
@@ -88,7 +89,7 @@ class PostFormFields extends Command implements SelfHandling
             $fields[$field] = $post->{$field};
         }
 
-        $fields['tags'] = $post->tags()->lists('tag');
+        $fields['tags'] = $post->tags()->lists('tag')->all();
 
         return $fields;
     }

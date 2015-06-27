@@ -1,9 +1,9 @@
 <?php
+
 namespace App;
 
 use App\Services\Markdowner;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -45,7 +45,7 @@ class Post extends Model
      */
     protected function setUniqueSlug($title, $extra)
     {
-        $slug = Str::slug($title.'-'.$extra);
+        $slug = str_slug($title.'-'.$extra);
 
         if (static::whereSlug($slug)->exists()) {
             $this->setUniqueSlug($title, $extra + 1);
@@ -79,7 +79,7 @@ class Post extends Model
 
         if (count($tags)) {
             $this->tags()->sync(
-                Tag::whereIn('tag', $tags)->lists('id')
+                Tag::whereIn('tag', $tags)->lists('id')->all()
             );
             return;
         }
