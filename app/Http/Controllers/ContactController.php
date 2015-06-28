@@ -29,8 +29,8 @@ class ContactController extends Controller
 
         Mail::queue('emails.contact', $data, function ($message) use ($data) {
             $message->subject('Blog Contact Form: '.$data['name'])
-                    ->to(config('blog.contact_email'))
-                    ->replyTo($data['email']);
+                ->to(config('blog.contact_email'))
+                ->replyTo($data['email']);
         });
 
         return back()

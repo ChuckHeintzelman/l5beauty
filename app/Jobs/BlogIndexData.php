@@ -1,12 +1,13 @@
 <?php
-namespace App\Commands;
+
+namespace App\Jobs;
 
 use App\Post;
 use App\Tag;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 
-class BlogIndexData extends Command implements SelfHandling
+class BlogIndexData extends Job implements SelfHandling
 {
     protected $tag;
 
@@ -69,10 +70,10 @@ class BlogIndexData extends Command implements SelfHandling
         $tag = Tag::where('tag', $tag)->firstOrFail();
         $reverse_direction = (bool)$tag->reverse_direction;
 
-        $posts = Post::whereHas('tags', function ($q) use ($tag) {
-            $q->where('tag', '=', $tag->tag);
-        })
-            ->where('published_at', '<=', Carbon::now())
+        $posts = Post::where('published_at', '<=', Carbon::now())
+            ->whereHas('tags', function ($q) use ($tag) {
+                $q->where('tag', '=', $tag->tag);
+            })
             ->where('is_draft', 0)
             ->orderBy('published_at', $reverse_direction ? 'asc' : 'desc')
             ->simplePaginate(config('blog.posts_per_page'));
@@ -87,8 +88,7 @@ class BlogIndexData extends Command implements SelfHandling
             'page_image' => $page_image,
             'tag' => $tag,
             'reverse_direction' => $reverse_direction,
-            'meta_description' => $tag->meta_description ?: \
-                config('blog.description'),
+            'meta_description' => $tag->meta_description ?: config('blog.description'),
         ];
     }
 }

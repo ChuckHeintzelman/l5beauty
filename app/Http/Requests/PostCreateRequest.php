@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Carbon\Carbon;

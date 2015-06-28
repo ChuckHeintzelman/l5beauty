@@ -1,75 +1,84 @@
+var gulp = require('gulp');
+var rename = require('gulp-rename');
 var elixir = require('laravel-elixir');
 
-elixir(function(mix) {
-    var dtPluginsDir = 'vendor/bower_components/datatables-plugins/';
+/**
+ * Copy any needed files.
+ *
+ * Do a 'gulp copyfiles' after bower updates
+ */
+gulp.task("copyfiles", function() {
 
-    // Copy jquery, bootstrap, and font awesome
-    mix.copy(
-        'vendor/bower_components/jquery/dist/jquery.js',
-        'resources/assets/js/jquery.js'
-    ).copy(
-        'vendor/bower_components/bootstrap/less',
-        'resources/assets/less/bootstrap'
-    ).copy(
-        'vendor/bower_components/bootstrap/dist/js/bootstrap.js',
-        'resources/assets/js/bootstrap.js'
-    ).copy(
-        'vendor/bower_components/bootstrap/dist/fonts',
-        'public/assets/fonts'
-    ).copy(
-        'vendor/bower_components/fontawesome/less',
-        'resources/assets/less/fontawesome'
-    ).copy(
-        'vendor/bower_components/fontawesome/fonts',
-        'public/assets/fonts'
-    );
+    // Copy jQuery, Bootstrap, and FontAwesome
+    gulp.src("vendor/bower_dl/jquery/dist/jquery.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+
+    gulp.src("vendor/bower_dl/bootstrap/less/**")
+        .pipe(gulp.dest("resources/assets/less/bootstrap"));
+
+    gulp.src("vendor/bower_dl/bootstrap/dist/js/bootstrap.js")
+        .pipe(gulp.dest("resources/assets/js/"));
+
+    gulp.src("vendor/bower_dl/bootstrap/dist/fonts/**")
+        .pipe(gulp.dest("public/assets/fonts"));
+
+    gulp.src("vendor/bower_dl/fontawesome/less/**")
+        .pipe(gulp.dest("resources/assets/less/fontawesome"));
+
+    gulp.src("vendor/bower_dl/fontawesome/fonts/**")
+        .pipe(gulp.dest("public/assets/fonts"));
 
     // Copy datatables
-    mix.copy(
-        'vendor/bower_components/datatables/media/js/jquery.dataTables.js',
-        'resources/assets/js/dataTables.js'
-    ).copy(
-        dtPluginsDir + 'integration/bootstrap/3/dataTables.bootstrap.css',
-        'resources/assets/less/dataTables.less'
-    ).copy(
-        dtPluginsDir + 'integration/bootstrap/3/dataTables.bootstrap.js',
-        'resources/assets/js/dataTables.bootstrap.js'
-    );
+    var dtDir = 'vendor/bower_dl/datatables-plugins/integration/';
 
-    // Copy selectize and pickadate
-    mix.copy(
-        'vendor/bower_components/selectize/dist/css',
-        'public/assets/selectize/css'
-    ).copy(
-        'vendor/bower_components/selectize/dist/js/standalone/selectize.min.js',
-        'public/assets/selectize/selectize.min.js'
-    ).copy(
-        'vendor/bower_components/pickadate/lib/compressed/themes',
-        'public/assets/pickadate/themes'
-    ).copy(
-        'vendor/bower_components/pickadate/lib/compressed/picker.js',
-        'public/assets/pickadate/picker.js'
-    ).copy(
-        'vendor/bower_components/pickadate/lib/compressed/picker.date.js',
-        'public/assets/pickadate/picker.date.js'
-    ).copy(
-        'vendor/bower_components/pickadate/lib/compressed/picker.time.js',
-        'public/assets/pickadate/picker.time.js'
-    );
+    gulp.src("vendor/bower_dl/datatables/media/js/jquery.dataTables.js")
+        .pipe(gulp.dest('resources/assets/js/'));
 
-    // Copy the Clean Blog Less files
-    mix.copy(
-        'vendor/bower_components/clean-blog/less',
-        'resources/assets/less/clean-blog'
-    );
+    gulp.src(dtDir + 'bootstrap/3/dataTables.bootstrap.css')
+        .pipe(rename('dataTables.bootstrap.less'))
+        .pipe(gulp.dest('resources/assets/less/others/'));
 
-    // Combine admin scripts
+    gulp.src(dtDir + 'bootstrap/3/dataTables.bootstrap.js')
+        .pipe(gulp.dest('resources/assets/js/'));
+
+    // Copy selectize
+    gulp.src("vendor/bower_dl/selectize/dist/css/**")
+        .pipe(gulp.dest("public/assets/selectize/css"));
+
+    gulp.src("vendor/bower_dl/selectize/dist/js/standalone/selectize.min.js")
+        .pipe(gulp.dest("public/assets/selectize/"));
+
+    // Copy pickadate
+    gulp.src("vendor/bower_dl/pickadate/lib/compressed/themes/**")
+        .pipe(gulp.dest("public/assets/pickadate/themes/"));
+
+    gulp.src("vendor/bower_dl/pickadate/lib/compressed/picker.js")
+        .pipe(gulp.dest("public/assets/pickadate/"));
+
+    gulp.src("vendor/bower_dl/pickadate/lib/compressed/picker.date.js")
+        .pipe(gulp.dest("public/assets/pickadate/"));
+
+    gulp.src("vendor/bower_dl/pickadate/lib/compressed/picker.time.js")
+        .pipe(gulp.dest("public/assets/pickadate/"));
+
+    // Copy clean-blog less files
+    gulp.src("vendor/bower_dl/clean-blog/less/**")
+        .pipe(gulp.dest("resources/assets/less/clean-blog"));
+});
+
+/**
+ * Default gulp is to run this elixir stuff
+ */
+elixir(function(mix) {
+
+    // Combine scripts
     mix.scripts([
         'js/jquery.js',
         'js/bootstrap.js',
-        'js/dataTables.js',
+        'js/jquery.dataTables.js',
         'js/dataTables.bootstrap.js'
-    ], 'public/assets/js/admin.js', 'resources/assets');
+    ],
+    'public/assets/js/admin.js', 'resources/assets');
 
     // Combine blog scripts
     mix.scripts([
@@ -78,7 +87,7 @@ elixir(function(mix) {
         'js/blog.js'
     ], 'public/assets/js/blog.js', 'resources/assets');
 
-    // Compile Less
-    mix.less('admin.less', 'public/assets/css');
-    mix.less('blog.less', 'public/assets/css');
+    // Compile CSS
+    mix.less('admin.less', 'public/assets/css/admin.css');
+    mix.less('blog.less', 'public/assets/css/blog.css');
 });

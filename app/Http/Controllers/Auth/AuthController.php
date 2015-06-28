@@ -1,70 +1,39 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AuthController extends Controller
 {
-    protected $auth;
+    use AuthenticatesUsers;
+
+    protected $redirectAfterLogout = '/auth/login';
+    protected $redirectTo = '/admin/post';
 
     /**
      * Create a new authentication controller instance.
-     *
-     * @param  Guard  $auth
      */
-    public function __construct(Guard $auth)
+    public function __construct()
     {
-        $this->auth = $auth;
-
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**
-     * Show the login form.
+     * Get a validator for an incoming registration request.
      *
-     * @return Response
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    public function getLogin()
+    protected function validator(array $data)
     {
-        return view('auth.login');
-    }
-
-    /**
-     * Handle a login request.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function postLogin(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|email', 'password' => 'required',
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
         ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if ($this->auth->attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended('/auth/login');
-        }
-
-        return redirect('/auth/login')
-            ->withInput($request->only('email', 'remember'))
-            ->withErrors([
-                'email' => 'Invalid credentials.',
-            ]);
-    }
-
-    /**
-     * Log the user out of the application.
-     *
-     * @return Response
-     */
-    public function getLogout()
-    {
-        $this->auth->logout();
-
-        return redirect('/auth/login');
     }
 }

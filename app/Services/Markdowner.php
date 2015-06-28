@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Michelf\MarkdownExtra;
@@ -6,6 +7,7 @@ use Michelf\SmartyPants;
 
 class Markdowner
 {
+
     public function toHTML($text)
     {
         $text = $this->preTransformText($text);
