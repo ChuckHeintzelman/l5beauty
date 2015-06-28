@@ -7,6 +7,8 @@ class RestructurePostsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -18,12 +20,14 @@ class RestructurePostsTable extends Migration
             $table->string('meta_description')->after('page_image');
             $table->boolean('is_draft')->after('meta_description');
             $table->string('layout')->after('is_draft')
-                ->default('blog.layouts.post');
+                  ->default('blog.layouts.post');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

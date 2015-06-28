@@ -1,8 +1,8 @@
 <?php
 return [
     'name' => "L5 Beauty",
-    "title" => "Laravel 5 Beauty",
-    'subtitle' => 'A clean blog written in Laravel 5',
+    'title' => "Laravel 5.1 Beauty",
+    'subtitle' => 'A clean blog written in Laravel 5.1',
     'description' => 'This is my meta description',
     'author' => 'Chuck Heintzelman',
     'page_image' => 'home-bg.jpg',
@@ -12,3 +12,4 @@ return [
         'webpath' => '/uploads/',
     ],
 ];
+

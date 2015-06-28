@@ -1,11 +1,15 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = ['tag', 'title', 'subtitle'];
+    protected $fillable = [
+        'tag', 'title', 'subtitle', 'page_image', 'meta_description',
+        'reverse_direction',
+    ];
 
     /**
      * The many-to-many relationship between tags and posts.
@@ -28,13 +32,16 @@ class Tag extends Model
             return;
         }
 
-        $found = static::whereIn('tag', $tags)->lists('tag');
+        $found = static::whereIn('tag', $tags)->lists('tag')->all();
 
         foreach (array_diff($tags, $found) as $tag) {
             static::create([
                 'tag' => $tag,
                 'title' => $tag,
                 'subtitle' => 'Subtitle for '.$tag,
+                'page_image' => '',
+                'meta_description' => '',
+                'reverse_direction' => false,
             ]);
         }
     }

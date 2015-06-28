@@ -31,10 +31,21 @@
           </div>
           <script>
             function handle_image_change() {
-              $("#page-image-preview").attr(
-                      "src",
-                      admin.page_image($("#page_image").val())
-              );
+              $("#page-image-preview").attr("src", function () {
+                var value = $("#page_image").val();
+                if ( ! value) {
+                  value = {!! json_encode(config('blog.page_image')) !!};
+                  if (value == null) {
+                    value = '';
+                  }
+                }
+                if (value.substr(0, 4) != 'http' &&
+                    value.substr(0, 1) != '/') {
+                  value = {!! json_encode(config('blog.uploads.webpath')) !!}
+                        + '/' + value;
+                }
+                return value;
+              });
             }
           </script>
           <div class="visible-sm space-10"></div>

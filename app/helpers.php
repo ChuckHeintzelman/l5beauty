@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * Return "checked" if true
+ */
+function checked($value)
+{
+    return $value ? 'checked' : '';
+}
+
+/**
  * Return sizes readable by humans
  */
 function human_filesize($bytes, $decimals = 2)
@@ -21,14 +29,6 @@ function is_image($mimeType)
 }
 
 /**
- * Return "checked" if true
- */
-function checked($value)
-{
-    return $value ? 'checked' : '';
-}
-
-/**
  * Return img url for headers
  */
 function page_image($value = null)
@@ -37,7 +37,7 @@ function page_image($value = null)
         $value = config('blog.page_image');
     }
     if (! starts_with($value, 'http') && $value[0] !== '/') {
-        $value = config('blog.uploads.webpath') . $value;
+        $value = config('blog.uploads.webpath') . '/' . $value;
     }
 
     return $value;

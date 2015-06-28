@@ -2,7 +2,6 @@
 
 class MarkdownerTest extends TestCase
 {
-
     protected $markdown;
 
     public function setup()
