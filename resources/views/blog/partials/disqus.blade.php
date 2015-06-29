@@ -4,10 +4,7 @@
     var disqus_shortname = 'SHORTNAME HERE';
     @if (isset($slug))
       var disqus_identifier = 'blog-{{ $slug }}';
-    @if (isset($title))
-      var disqus_title = {{ $title }};
     @endif
-  @endif
 
   (function() {
     var dsq = document.createElement('script');
